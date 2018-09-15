@@ -4,6 +4,8 @@
 
 Simple INI file parser library written in C# .NET.
 
+-----
+
 ### Format
 
 The basic element contained in an ini file is the key. Every key has a name and a value, delimited by an equals sign '='. The name appears to the left of the equals sign.
@@ -13,6 +15,8 @@ The characters equal sign '=' or semi colon ';' are reserved characters, and can
 Section and key names are case sensitive.
 
 Start of line comments and inline comments using ';' character are ignored.
+
+-----
 
 ### Usage
 

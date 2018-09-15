@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParserLibrary", "IniParserLibrary\IniParserLibrary.csproj", "{53FB8A1D-3783-43E4-8B52-63E9455E843D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParserLibrary.Tests", "IniParserLibrary.Tests\IniParserLibrary.Tests.csproj", "{B14125AB-0473-418E-BBC3-6AEF8E863D1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{53FB8A1D-3783-43E4-8B52-63E9455E843D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53FB8A1D-3783-43E4-8B52-63E9455E843D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53FB8A1D-3783-43E4-8B52-63E9455E843D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B14125AB-0473-418E-BBC3-6AEF8E863D1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B14125AB-0473-418E-BBC3-6AEF8E863D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B14125AB-0473-418E-BBC3-6AEF8E863D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B14125AB-0473-418E-BBC3-6AEF8E863D1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

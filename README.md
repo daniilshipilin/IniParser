@@ -1,7 +1,18 @@
 # IniParserLibrary
 
 ### Description
-Simple INI file parser library.
+
+Simple INI file parser library written in C# .NET.
+
+### Format
+
+The basic element contained in an ini file is the key. Every key has a name and a value, delimited by an equals sign '='. The name appears to the left of the equals sign.
+
+The characters equal sign '=' or semi colon ';' are reserved characters, and cannot be used in section names, key names or key values.
+
+Section and key names are case sensitive.
+
+Start of line comments and inline comments using ';' character are ignored.
 
 ### Usage
 
@@ -9,13 +20,13 @@ Simple INI file parser library.
 `var ini = new IniParser(iniFilePath);`
 
 ###### Get key value:
-`string keyValue = ini.GetValue("SECTION_NAME", "KeyName");` (*returns null, if key doesn't exist*)
+`string keyValue = ini.GetValue("Section", "Key");` (*returns null, if key doesn't exist*)
 
 ###### Set key value:
-`ini.SetValue("SECTION_NAME", "KeyName", "KeyValue");`
+`ini.SetValue("Section", "Key", "KeyValue");`
 
 ###### Delete key:
-`ini.DeleteKey("SECTION_NAME", "KeyName");` (*returns true, if existing key was deleted*)
+`ini.DeleteKey("Section", "Key");` (*returns true, if existing key was deleted*)
 
 ###### Save/commit changes:
 `ini.SaveIni();` (*actual ini file save is initiated only, if changes have been made - override this with optional forceSave parameter*)
@@ -32,9 +43,19 @@ Simple INI file parser library.
 
 `ini.DisableIniAutoSave();`
 
+###### Reload ini file:
+`ini.ReloadIni();`
+
 -----
 
 ### Changelog
+
+###### v0.2.0 - 2018-09-15
+**Added**
+
+* Comment lines using ';' char support;
+* Reload ini file method;
+* Unit tests project.
 
 ###### v0.1.0 - 2018-09-14
 * Initial project/library version.

@@ -48,9 +48,9 @@ namespace IniParserLibrary
         /// <summary>
         /// IniParser class main constructor.
         /// </summary>
-        public IniParser(string iniFilePath, bool iniAutoSaveIsEnabled = false)
+        public IniParser(string iniFilePath, bool iniAutoSaveEnabled = false)
         {
-            if (string.IsNullOrEmpty(iniFilePath))
+            if (iniFilePath == null)
             {
                 throw new ArgumentNullException("iniFilePath");
             }
@@ -61,18 +61,10 @@ namespace IniParserLibrary
             }
 
             IniFilePath = iniFilePath;
-            IniAutoSaveEnabled = iniAutoSaveIsEnabled;
+            IniAutoSaveEnabled = iniAutoSaveEnabled;
             ChangesPending = false;
             _keyPairs = new Dictionary<SectionKeyPair, string>();
-
-            try
-            {
-                EnumerateSectionKeyPairs();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            EnumerateSectionKeyPairs();
         }
 
         /// <summary>
@@ -87,6 +79,13 @@ namespace IniParserLibrary
 
                 while (currentLine != null)
                 {
+                    // check for semicolon chars, and ignore the rest of the string (Start of line/inline comments)
+                    if (currentLine.IndexOf(';') >= 0)
+                    {
+                        var tmp = currentLine.Split(';');
+                        currentLine = tmp[0];
+                    }
+
                     currentLine = currentLine.Trim();
 
                     if (currentLine != string.Empty)
@@ -213,6 +212,16 @@ namespace IniParserLibrary
 
                 ChangesPending = false;
             }
+        }
+
+        /// <summary>
+        /// Reloads the ini file.
+        /// </summary>
+        public void ReloadIni()
+        {
+            ChangesPending = false;
+            _keyPairs = new Dictionary<SectionKeyPair, string>();
+            EnumerateSectionKeyPairs();
         }
 
         /// <summary>

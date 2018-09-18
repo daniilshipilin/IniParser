@@ -13,7 +13,7 @@ namespace IniParserLibrary
         /// <summary>
         /// Flag, that indicates whether SaveIni should be called automatically after changes have been made.
         /// </summary>
-        public bool IniAutoSaveEnabled { get; private set; }
+        public bool IniAutoSaveEnabled { get; set; }
 
         /// <summary>
         /// The source ini file full path.
@@ -48,7 +48,7 @@ namespace IniParserLibrary
         /// <summary>
         /// IniParser class main constructor.
         /// </summary>
-        public IniParser(string iniFilePath, bool iniAutoSaveEnabled = false)
+        public IniParser(string iniFilePath)
         {
             if (iniFilePath == null)
             {
@@ -61,9 +61,6 @@ namespace IniParserLibrary
             }
 
             IniFilePath = iniFilePath;
-            IniAutoSaveEnabled = iniAutoSaveEnabled;
-            ChangesPending = false;
-            _keyPairs = new Dictionary<SectionKeyPair, string>();
             EnumerateSectionKeyPairs();
         }
 
@@ -72,6 +69,8 @@ namespace IniParserLibrary
         /// </summary>
         private void EnumerateSectionKeyPairs()
         {
+            _keyPairs = new Dictionary<SectionKeyPair, string>();
+
             using (var iniFile = new StreamReader(IniFilePath))
             {
                 string currentSection = string.Empty;
@@ -79,11 +78,11 @@ namespace IniParserLibrary
 
                 while (currentLine != null)
                 {
-                    // check for semicolon chars, and ignore the rest of the string (Start of line/inline comments)
+                    // check for semicolon chars, and ignore the rest of the string (comments)
                     if (currentLine.IndexOf(';') >= 0)
                     {
-                        var tmp = currentLine.Split(';');
-                        currentLine = tmp[0];
+                        var split = new List<string>(currentLine.Split(';'));
+                        currentLine = split[0];
                     }
 
                     currentLine = currentLine.Trim();
@@ -171,47 +170,44 @@ namespace IniParserLibrary
         }
 
         /// <summary>
-        /// Commit/save settings to ini file, if there are pending changes. Optionally, force save can be initiated.
+        /// Commit/save settings to ini file.
         /// </summary>
-        public void SaveIni(bool forceSave = false)
+        public void SaveIni()
         {
-            if (ChangesPending || forceSave)
+            var sections = new List<string>();
+            var sb = new StringBuilder();
+
+            foreach (var sectionKeyPair in _keyPairs.Keys)
             {
-                var sections = new List<string>();
-                var sb = new StringBuilder();
+                if (!sections.Contains(sectionKeyPair.Section))
+                {
+                    sections.Add(sectionKeyPair.Section);
+                }
+            }
+
+            foreach (string section in sections)
+            {
+                sb.AppendLine($"[{section}]");
 
                 foreach (var sectionKeyPair in _keyPairs.Keys)
                 {
-                    if (!sections.Contains(sectionKeyPair.Section))
+                    if (sectionKeyPair.Section.Equals(section))
                     {
-                        sections.Add(sectionKeyPair.Section);
+                        sb.AppendLine($"{sectionKeyPair.SectionKey}={_keyPairs[sectionKeyPair]}");
                     }
                 }
-
-                foreach (string section in sections)
-                {
-                    sb.AppendLine($"[{section}]");
-
-                    foreach (var sectionKeyPair in _keyPairs.Keys)
-                    {
-                        if (sectionKeyPair.Section.Equals(section))
-                        {
-                            sb.AppendLine($"{sectionKeyPair.SectionKey}={_keyPairs[sectionKeyPair]}");
-                        }
-                    }
-                }
-
-                try
-                {
-                    File.WriteAllText(IniFilePath, sb.ToString());
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-
-                ChangesPending = false;
             }
+
+            try
+            {
+                File.WriteAllText(IniFilePath, sb.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            ChangesPending = false;
         }
 
         /// <summary>
@@ -220,7 +216,6 @@ namespace IniParserLibrary
         public void ReloadIni()
         {
             ChangesPending = false;
-            _keyPairs = new Dictionary<SectionKeyPair, string>();
             EnumerateSectionKeyPairs();
         }
 
@@ -230,7 +225,6 @@ namespace IniParserLibrary
         public void EnableIniAutoSave()
         {
             IniAutoSaveEnabled = true;
-
             CheckAutoSaveRequired();
         }
 

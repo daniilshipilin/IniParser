@@ -40,6 +40,11 @@ ini.SetValue("Section", "Key", "Value");
 ini.DeleteKey("Section", "Key"); // returns true, if existing key was deleted
 ```
 
+###### Get all keys and their values for the specific section:
+```
+Dictionary<string, string> keysAndValues = ini.GetSectionKeysAndValues("Section");
+```
+
 ###### Save/commit changes to ini file:
 ```
 ini.SaveIni();
@@ -72,7 +77,14 @@ ini.ReloadIni();
 
 ### Changelog
 
+###### v0.4.0 - 2018-10-09
+
+**Added**
+
+* GetSectionKeysAndValues method available.
+
 ###### v0.3.0 - 2018-09-18
+
 **Added**
 
 * IniAutoSaveEnabled property can be set during object initialization.
@@ -82,6 +94,7 @@ ini.ReloadIni();
 * SaveIni method now force saves ini file, without checking for pending changes.
 
 ###### v0.2.0 - 2018-09-15
+
 **Added**
 
 * Comment lines using ';' char support;
@@ -89,4 +102,5 @@ ini.ReloadIni();
 * Unit tests project.
 
 ###### v0.1.0 - 2018-09-14
+
 * Initial project/library version.

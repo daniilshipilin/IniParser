@@ -148,10 +148,29 @@ namespace IniParserLibrary
             CheckAutoSaveRequired();
         }
 
-        /// <summary>
-        /// Remove a key for given section. Returns true, if existing key was deleted.
-        /// </summary>
-        public bool DeleteKey(string section, string sectionKey)
+		/// <summary>
+		/// Gets keys and their values for given section.
+		/// </summary>
+		public Dictionary<string, string> GetSectionKeysAndValues(string section)
+		{
+			var keysAndValues = new Dictionary<string, string>();
+
+			foreach (var skp in _keyPairs.Keys)
+			{
+				if (skp.Section.Equals(section))
+				{
+					string keyValue = GetValue(section, skp.SectionKey);
+					keysAndValues.Add(skp.SectionKey, keyValue);
+				}
+			}
+
+			return (keysAndValues);
+		}
+
+		/// <summary>
+		/// Remove a key for given section. Returns true, if existing key was deleted.
+		/// </summary>
+		public bool DeleteKey(string section, string sectionKey)
         {
             bool keyIsDeleted = false;
 

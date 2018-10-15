@@ -30,8 +30,8 @@ namespace IniParserLibrary
         /// </summary>
         struct SectionKeyPair
         {
-            public string Section;
-            public string SectionKey;
+            public readonly string Section;
+            public readonly string SectionKey;
 
             public SectionKeyPair(string section, string sectionKey)
             {
@@ -79,9 +79,11 @@ namespace IniParserLibrary
                 while (currentLine != null)
                 {
                     // check for semicolon chars, and ignore the rest of the string (comments)
-                    if (currentLine.IndexOf(';') >= 0)
+                    int pos = currentLine.IndexOfAny(new char[] { ';', '#' });
+
+                    if (pos >= 0)
                     {
-                        var split = new List<string>(currentLine.Split(';'));
+                        var split = new List<string>(currentLine.Split(currentLine[pos]));
                         currentLine = split[0];
                     }
 
@@ -148,29 +150,29 @@ namespace IniParserLibrary
             CheckAutoSaveRequired();
         }
 
-		/// <summary>
-		/// Gets keys and their values for given section.
-		/// </summary>
-		public Dictionary<string, string> GetSectionKeysAndValues(string section)
-		{
-			var keysAndValues = new Dictionary<string, string>();
+        /// <summary>
+        /// Gets keys and their values for given section.
+        /// </summary>
+        public Dictionary<string, string> GetSectionKeysAndValues(string section)
+        {
+            var keysAndValues = new Dictionary<string, string>();
 
-			foreach (var skp in _keyPairs.Keys)
-			{
-				if (skp.Section.Equals(section))
-				{
-					string keyValue = GetValue(section, skp.SectionKey);
-					keysAndValues.Add(skp.SectionKey, keyValue);
-				}
-			}
+            foreach (var skp in _keyPairs.Keys)
+            {
+                if (skp.Section.Equals(section))
+                {
+                    string keyValue = GetValue(section, skp.SectionKey);
+                    keysAndValues.Add(skp.SectionKey, keyValue);
+                }
+            }
 
-			return (keysAndValues);
-		}
+            return (keysAndValues);
+        }
 
-		/// <summary>
-		/// Remove a key for given section. Returns true, if existing key was deleted.
-		/// </summary>
-		public bool DeleteKey(string section, string sectionKey)
+        /// <summary>
+        /// Remove a key for given section. Returns true, if existing key was deleted.
+        /// </summary>
+        public bool DeleteKey(string section, string sectionKey)
         {
             bool keyIsDeleted = false;
 
@@ -217,14 +219,7 @@ namespace IniParserLibrary
                 }
             }
 
-            try
-            {
-                File.WriteAllText(IniFilePath, sb.ToString());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            File.WriteAllText(IniFilePath, sb.ToString());
 
             ChangesPending = false;
         }

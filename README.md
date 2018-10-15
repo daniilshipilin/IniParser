@@ -10,11 +10,11 @@ Simple INI file parser library written in C# (project uses .NET Framework v4.5.2
 
 The basic element contained in an ini file is the key. Every key has a name and a value, delimited by an equals sign '='. The name appears to the left of the equals sign.
 
-The characters equal sign '=' or semi colon ';' are reserved characters, and cannot be used in section names, key names or key values.
+The characters equal sign '=' or semi colon ';' or '#' are reserved characters, and cannot be used in section names, key names or key values.
 
 Section and key names are case sensitive.
 
-Start of line comments and inline comments using ';' character are ignored.
+Start of line comments and inline comments using ';' or '#' character are ignored.
 
 -----
 
@@ -76,6 +76,13 @@ ini.ReloadIni();
 -----
 
 ### Changelog
+
+###### v0.5.0 - 2018-10-15
+
+**Added**
+
+* Comment lines using '#' char support;
+* Misc improvements.
 
 ###### v0.4.0 - 2018-10-09
 

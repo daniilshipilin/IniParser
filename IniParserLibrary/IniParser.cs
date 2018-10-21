@@ -71,14 +71,14 @@ namespace IniParserLibrary
         {
             _keyPairs = new Dictionary<SectionKeyPair, string>();
 
-            using (var iniFile = new StreamReader(IniFilePath))
+            using (var iniFile = new StreamReader(IniFilePath, Encoding.UTF8))
             {
                 string currentSection = string.Empty;
                 string currentLine = iniFile.ReadLine();
 
                 while (currentLine != null)
                 {
-                    // check for semicolon chars, and ignore the rest of the string (comments)
+                    // check for ';' or '#' chars, and ignore the rest of the string (comments)
                     int pos = currentLine.IndexOfAny(new char[] { ';', '#' });
 
                     if (pos >= 0)
@@ -101,7 +101,7 @@ namespace IniParserLibrary
 
                             if (keyPair.Count != 2)
                             {
-                                throw new Exception($"'{currentSection}' key/value enumeration failed");
+                                throw new Exception("Ini key/value pair enumeration failed");
                             }
 
                             var skp = new SectionKeyPair(currentSection, keyPair[0].Trim());
@@ -219,7 +219,7 @@ namespace IniParserLibrary
                 }
             }
 
-            File.WriteAllText(IniFilePath, sb.ToString());
+            File.WriteAllText(IniFilePath, sb.ToString(), Encoding.UTF8);
 
             ChangesPending = false;
         }

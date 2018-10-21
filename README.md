@@ -77,6 +77,12 @@ ini.ReloadIni();
 
 ### Changelog
 
+###### v0.6.0 - 2018-10-21
+
+**Changed**
+
+* Ini file read/save in UTF8 format.
+
 ###### v0.5.0 - 2018-10-15
 
 **Added**

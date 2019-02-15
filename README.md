@@ -77,6 +77,12 @@ ini.ReloadIni();
 
 ### Changelog
 
+###### v0.6.1 - 2019-02-15
+
+**Changed**
+
+* Ini file save as UTF8 without BOM.
+
 ###### v0.6.0 - 2018-10-21
 
 **Changed**

@@ -219,7 +219,7 @@ namespace IniParserLibrary
                 }
             }
 
-            File.WriteAllText(IniFilePath, sb.ToString(), Encoding.UTF8);
+            File.WriteAllText(IniFilePath, sb.ToString(), new UTF8Encoding(false));
 
             ChangesPending = false;
         }

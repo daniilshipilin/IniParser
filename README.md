@@ -2,7 +2,7 @@
 
 ### Description
 
-Simple INI file parser library written in C# (project uses .NET Framework v4.5.2).
+Simple INI file parser library written in C# (project uses .NET Framework v4.8).
 
 -----
 
@@ -21,32 +21,32 @@ Start of line comments and inline comments using ';' or '#' character are ignore
 ### Usage
 
 ###### Instantiate IniParser:
-```
+```csharp
 var ini = new IniParser(iniFilePath);
 ```
 
 ###### Get key value:
-```
+```csharp
 string keyValue = ini.GetValue("Section", "Key"); // returns null, if key doesn't exist
 ```
 
 ###### Set key value:
-```
+```csharp
 ini.SetValue("Section", "Key", "Value");
 ```
 
 ###### Delete key:
-```
+```csharp
 ini.DeleteKey("Section", "Key"); // returns true, if existing key was deleted
 ```
 
 ###### Get all keys and their values for the specific section:
-```
+```csharp
 Dictionary<string, string> keysAndValues = ini.GetSectionKeysAndValues("Section");
 ```
 
 ###### Save/commit changes to ini file:
-```
+```csharp
 ini.SaveIni();
 ```
 
@@ -55,7 +55,7 @@ ini.SaveIni();
 ### Options
 
 ###### Instantiate IniParser and enable ini file autosave functionality (no need to call SaveIni method after SetValue or DeleteKey):
-```
+```csharp
 var ini = new IniParser(iniFilePath)
 {
     IniAutoSaveEnabled = true
@@ -63,12 +63,12 @@ var ini = new IniParser(iniFilePath)
 ```
 
 ###### Enable/disable ini file autosave functionality after class has been instantiated:
-```
+```csharp
 ini.EnableIniAutoSave();
 ini.DisableIniAutoSave();
 ```
 
 ###### Reload ini file:
-```
+```csharp
 ini.ReloadIni();
 ```

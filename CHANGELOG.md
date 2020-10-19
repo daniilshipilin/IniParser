@@ -1,6 +1,10 @@
 # Changelog
 
------
+### v0.7.0 - 2020-10-19
+
+**Changed**
+
+* Project migrated to .NET Framework v4.8.
 
 ### v0.6.1 - 2019-02-15
 

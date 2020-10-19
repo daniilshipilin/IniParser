@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2019
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParserLibrary", "IniParserLibrary\IniParserLibrary.csproj", "{53FB8A1D-3783-43E4-8B52-63E9455E843D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParser", "IniParser\IniParser.csproj", "{53FB8A1D-3783-43E4-8B52-63E9455E843D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParserLibrary.Tests", "IniParserLibrary.Tests\IniParserLibrary.Tests.csproj", "{B14125AB-0473-418E-BBC3-6AEF8E863D1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParser.Tests", "IniParser.Tests\IniParser.Tests.csproj", "{B14125AB-0473-418E-BBC3-6AEF8E863D1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68159ECC-B8A7-42C4-BC4C-2000391B3B11}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

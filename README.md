@@ -2,7 +2,7 @@
 
 ### Description
 
-Simple INI file parser library written in C# (project uses .NET Framework v4.8).
+Simple INI file parser library written in C# (.NET Standart v2.1).
 
 -----
 
@@ -42,7 +42,7 @@ ini.DeleteKey("Section", "Key"); // returns true, if existing key was deleted
 
 ###### Get all keys and their values for the specific section:
 ```csharp
-Dictionary<string, string> keysAndValues = ini.GetSectionKeysAndValues("Section");
+Dictionary<string, string?> keysAndValues = ini.GetSectionKeysAndValues("Section");
 ```
 
 ###### Save/commit changes to ini file:
@@ -54,15 +54,7 @@ ini.SaveIni();
 
 ### Options
 
-###### Instantiate IniParser and enable ini file autosave functionality (no need to call SaveIni method after SetValue or DeleteKey):
-```csharp
-var ini = new IniParser(iniFilePath)
-{
-    IniAutoSaveEnabled = true
-};
-```
-
-###### Enable/disable ini file autosave functionality after class has been instantiated:
+###### Enable/disable ini file autosave functionality (no need to call SaveIni method after SetValue or DeleteKey) after class has been instantiated:
 ```csharp
 ini.EnableIniAutoSave();
 ini.DisableIniAutoSave();

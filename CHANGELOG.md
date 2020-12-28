@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.8.0 - 2020-12-28
+
+**Changed**
+
+* Project migrated to .NET Standart v2.1.
+
 ### v0.7.0 - 2020-10-19
 
 **Changed**

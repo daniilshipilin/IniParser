@@ -27,7 +27,7 @@ var ini = new IniParser(iniFilePath);
 
 ###### Get key value:
 ```csharp
-string keyValue = ini.GetValue("Section", "Key"); // returns null, if key doesn't exist
+string? keyValue = ini.GetValue("Section", "Key"); // returns null, if key doesn't exist
 ```
 
 ###### Set key value:

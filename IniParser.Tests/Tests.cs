@@ -10,7 +10,7 @@ namespace IniParser.Tests
     [TestFixture]
     public class Tests
     {
-        private const string EXAMPLEINISHA512 = "a58cfe72481a722a046cec0470a3e956871c687642616e8940f83d9a296ccef1c71d8b7f3a034184c9f594e4937be2eb8ce2c977dd77b4025aaad8bcf274bbad";
+        private const string EXAMPLEINISHA512 = "82327697e09473dbb9567749f127fd2e96ced5581b55ff413f6feabe49073701377f640b3cff4071b338b4e8aaa638e11d9bc86f54feda62c2c848245578cf62";
 
         private const string SECTION1 = "Numbers";
         private const string SECTION2 = "Strings";

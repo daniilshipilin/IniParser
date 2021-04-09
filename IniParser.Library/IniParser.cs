@@ -187,18 +187,25 @@ namespace IniParser.Library
         {
             keyPairs.Clear();
 
-            using var iniFile = new StreamReader(IniFilePath, Encoding.UTF8);
-            string currentSection = string.Empty;
-            string currentLine = iniFile.ReadLine();
+            string[] iniFile = File.ReadAllLines(IniFilePath, Encoding.UTF8);
 
-            while (currentLine != null)
+            if (iniFile.Length == 0)
             {
+                throw new Exception($"'{IniFilePath}' file is empty");
+            }
+
+            string currentSection = string.Empty;
+
+            foreach (var line in iniFile)
+            {
+                string currentLine = line;
+
                 // check for ';' or '#' chars, and ignore the rest of the string (comments)
                 int pos = currentLine.IndexOfAny(new char[] { ';', '#' });
 
                 if (pos >= 0)
                 {
-                    var split = new List<string>(currentLine.Split(currentLine[pos]));
+                    string[] split = currentLine.Split(currentLine[pos]);
                     currentLine = split[0];
                 }
 
@@ -212,9 +219,9 @@ namespace IniParser.Library
                     }
                     else
                     {
-                        var keyPair = new List<string>(currentLine.Split(new char[] { '=' }, 2));
+                        string[] keyPair = currentLine.Split(new char[] { '=' }, 2);
 
-                        if (keyPair.Count != 2)
+                        if (keyPair.Length != 2)
                         {
                             throw new Exception("Ini key/value pair enumeration failed");
                         }
@@ -223,8 +230,6 @@ namespace IniParser.Library
                         keyPairs.Add(skp, keyPair[1].Trim());
                     }
                 }
-
-                currentLine = iniFile.ReadLine();
             }
         }
 

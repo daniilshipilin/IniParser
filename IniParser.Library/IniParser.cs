@@ -1,9 +1,9 @@
 namespace IniParser.Library
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using global::IniParser.Library.Exceptions;
 
     /// <summary>
     /// IniParser class.
@@ -18,6 +18,7 @@ namespace IniParser.Library
         /// <summary>
         /// Initializes a new instance of the <see cref="IniParser"/> class.
         /// </summary>
+        /// <exception cref="FileNotFoundException">Thrown when the provided ini file path doesnt exist.</exception>
         public IniParser(string iniFilePath)
         {
             if (!File.Exists(iniFilePath))
@@ -183,6 +184,8 @@ namespace IniParser.Library
         /// <summary>
         /// Reads the ini file and enumerates its values.
         /// </summary>
+        /// <exception cref="IniFileEmptyException">Thrown when the ini file is empty.</exception>
+        /// <exception cref="IniEnumerationFailedException">Thrown when the ini key/value pair enumeration failed.</exception>
         private void EnumerateSectionKeyPairs()
         {
             keyPairs.Clear();
@@ -191,7 +194,7 @@ namespace IniParser.Library
 
             if (iniFile.Length == 0)
             {
-                throw new Exception($"'{IniFilePath}' file is empty");
+                throw new IniFileEmptyException($"'{IniFilePath}' file is empty");
             }
 
             string currentSection = string.Empty;
@@ -223,7 +226,7 @@ namespace IniParser.Library
 
                         if (keyPair.Length != 2)
                         {
-                            throw new Exception("Ini key/value pair enumeration failed");
+                            throw new IniEnumerationFailedException("Ini key/value pair enumeration failed");
                         }
 
                         var skp = new SectionKeyPair(currentSection, keyPair[0].Trim());

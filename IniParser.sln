@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68159ECC-B8A7-42C4-BC4C-2000391B3B11}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParser.Library", "IniParser.Library\IniParser.Library.csproj", "{5B6E8B72-B807-4C6F-9FEF-E7C3A3960DC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParser.Tests", "IniParser.Tests\IniParser.Tests.csproj", "{D73E73C9-4F9E-40CE-A821-85F462DA0190}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B6E8B72-B807-4C6F-9FEF-E7C3A3960DC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B6E8B72-B807-4C6F-9FEF-E7C3A3960DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B6E8B72-B807-4C6F-9FEF-E7C3A3960DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B6E8B72-B807-4C6F-9FEF-E7C3A3960DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73E73C9-4F9E-40CE-A821-85F462DA0190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73E73C9-4F9E-40CE-A821-85F462DA0190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73E73C9-4F9E-40CE-A821-85F462DA0190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73E73C9-4F9E-40CE-A821-85F462DA0190}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {206A01C8-7FD5-4195-A6BA-2F6327624949}
+	EndGlobalSection
+EndGlobal

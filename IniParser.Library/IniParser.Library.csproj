@@ -6,8 +6,7 @@
         <LangVersion>latest</LangVersion>
         <AssemblyName>IniParser</AssemblyName>
         <RootNamespace>IniParser.Library</RootNamespace>
-        <Authors>Daniil Shipilin</Authors>
-        <Product>IniParser Library.</Product>
+        <Product>IniParser Library</Product>
     </PropertyGroup>
 
     <ItemGroup>

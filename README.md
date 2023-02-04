@@ -1,3 +1,4 @@
+![ini.ico](./IniParser/Images/ini.ico)
 # IniParser
 
 ### Description

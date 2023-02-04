@@ -44,9 +44,72 @@ public class Tests
     private const string DEFAULTINIFILEPATH = @".\Sample\Sample.ini";
     private const string TMPDIR = @".\Sample\TMP";
 
+    private string tmpIniFilePath = string.Empty;
+    private IIniParser ini = null!;
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        try
+        {
+            if (!Directory.Exists(TMPDIR))
+            {
+                Directory.CreateDirectory(TMPDIR);
+            }
+        }
+        catch (Exception ex)
+        {
+            Assert.Fail(ex.ToString());
+        }
+    }
+
     [SetUp]
     public void Setup()
     {
+        try
+        {
+            this.tmpIniFilePath = Path.Combine(TMPDIR, $"{Path.GetRandomFileName()}.ini");
+
+            File.Copy(DEFAULTINIFILEPATH, this.tmpIniFilePath);
+
+            ini = new IniParser(this.tmpIniFilePath);
+        }
+        catch (Exception ex)
+        {
+            Assert.Fail(ex.ToString());
+        }
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        try
+        {
+            if (File.Exists(this.tmpIniFilePath))
+            {
+                File.Delete(this.tmpIniFilePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            Assert.Fail(ex.ToString());
+        }
+    }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown()
+    {
+        try
+        {
+            if (Directory.Exists(TMPDIR))
+            {
+                Directory.Delete(TMPDIR);
+            }
+        }
+        catch (Exception ex)
+        {
+            Assert.Fail(ex.ToString());
+        }
     }
 
     /// <summary>
@@ -55,8 +118,6 @@ public class Tests
     [Test]
     public void SampleIniSuccessfullyParsed()
     {
-        var ini = InitIniParser();
-
         if (ini is not null)
         {
             Assert.Pass();
@@ -71,8 +132,6 @@ public class Tests
     [Test]
     public void SampleIniHashMatchesPrecomputedHash()
     {
-        var ini = InitIniParser();
-
         byte[] iniBytes = File.ReadAllBytes(DEFAULTINIFILEPATH);
         string resultHash = GenerateSHA512String(iniBytes);
 
@@ -90,8 +149,6 @@ public class Tests
     [Test]
     public void CheckIfKeyValuesMatch()
     {
-        var ini = InitIniParser();
-
         if (VALUE1.Equals(ini.GetValue(SECTION1, KEY1)) &&
             VALUE2.Equals(ini.GetValue(SECTION1, KEY2)) &&
             VALUE3.Equals(ini.GetValue(SECTION1, KEY3)) &&
@@ -115,8 +172,6 @@ public class Tests
     [Test]
     public void SetKeyValues()
     {
-        var ini = InitIniParser();
-
         ini.SetValue(SECTION1, KEY1, VALUE1);
         ini.SetValue(SECTION1, KEY2, VALUE2);
         ini.SetValue(SECTION1, KEY3, VALUE3);
@@ -142,8 +197,6 @@ public class Tests
     [Test]
     public void DeleteKeys()
     {
-        var ini = InitIniParser();
-
         bool deleted_1 = ini.DeleteKey(SECTION1, KEY1);
         bool deleted_2 = ini.DeleteKey(SECTION1, KEY2);
         bool deleted_3 = ini.DeleteKey(SECTION1, KEY3);
@@ -181,8 +234,6 @@ public class Tests
     [Test]
     public void CheckNonExistentSection()
     {
-        var ini = InitIniParser();
-
         if (ini.GetSectionKeysAndValues(NONEXISTENTSECTION).Count == 0)
         {
             Assert.Pass();
@@ -197,8 +248,6 @@ public class Tests
     [Test]
     public void CheckEmptySection()
     {
-        var ini = InitIniParser();
-
         if (ini.GetSectionKeysAndValues(SECTIONWITHNOKEYS).Count == 0)
         {
             Assert.Pass();
@@ -213,8 +262,6 @@ public class Tests
     [Test]
     public void CheckSectionWithEmptyKey()
     {
-        var ini = InitIniParser();
-
         var section = ini.GetSectionKeysAndValues(SECTIONWITHEMPTYKEY);
 
         if (string.IsNullOrEmpty(section[EMPTYKEY]))
@@ -223,36 +270,6 @@ public class Tests
         }
 
         Assert.Fail();
-    }
-
-    private static IIniParser InitIniParser()
-    {
-        IIniParser ini = null!;
-
-        try
-        {
-            if (!Directory.Exists(TMPDIR))
-            {
-                Directory.CreateDirectory(TMPDIR);
-            }
-
-            string destinationPath = Path.Combine(TMPDIR, $"{Path.GetRandomFileName()}.ini");
-
-            if (File.Exists(destinationPath))
-            {
-                File.Delete(destinationPath);
-            }
-
-            File.Copy(DEFAULTINIFILEPATH, destinationPath);
-
-            ini = new IniParser(destinationPath);
-        }
-        catch (Exception ex)
-        {
-            Assert.Fail(ex.ToString());
-        }
-
-        return ini;
     }
 
     /// <summary>

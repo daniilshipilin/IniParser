@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParser.Library", "IniParser.Library\IniParser.Library.csproj", "{5B6E8B72-B807-4C6F-9FEF-E7C3A3960DC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParser", "IniParser\IniParser.csproj", "{5B6E8B72-B807-4C6F-9FEF-E7C3A3960DC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniParser.Tests", "IniParser.Tests\IniParser.Tests.csproj", "{D73E73C9-4F9E-40CE-A821-85F462DA0190}"
 EndProject

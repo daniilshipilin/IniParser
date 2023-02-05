@@ -55,7 +55,7 @@ ini.SaveIni();
 
 ### Options
 
-###### Enable/disable ini file autosave functionality (no need to call SaveIni method after SetValue or DeleteKey) after class has been instantiated:
+###### Enable/disable ini file autosave functionality. No need to call SaveIni method after SetValue or DeleteKey after class has been instantiated:
 ```csharp
 ini.EnableIniAutoSave();
 ini.DisableIniAutoSave();

@@ -1,4 +1,4 @@
-![ini.ico](./IniParser/Images/ini.ico)
+![ini.ico](./IniParser.Lib/Images/ini.ico)
 # IniParser
 
 ### Description
@@ -65,3 +65,4 @@ ini.DisableIniAutoSave();
 ```csharp
 ini.ReloadIni();
 ```
+

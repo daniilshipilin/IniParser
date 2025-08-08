@@ -1,9 +1,9 @@
-namespace IniFileParser;
-
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using IniFileParser.Exceptions;
+using IniParser.Lib.Exceptions;
+
+namespace IniParser.Lib;
 
 /// <summary>
 /// IniParser class.
@@ -13,7 +13,7 @@ public class IniParser : IIniParser
     /// <summary>
     /// Section key pair/value dictionary.
     /// </summary>
-    private readonly Dictionary<SectionKeyPair, string> keyPairs;
+    private readonly Dictionary<SectionKeyPair, string> keyPairs = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IniParser"/> class.
@@ -26,7 +26,6 @@ public class IniParser : IIniParser
             throw new FileNotFoundException(nameof(iniFilePath));
         }
 
-        keyPairs = new Dictionary<SectionKeyPair, string>();
         IniFilePath = iniFilePath;
         EnumerateSectionKeyPairs();
     }
@@ -204,7 +203,7 @@ public class IniParser : IIniParser
             string currentLine = line;
 
             // check for ';' or '#' chars, and ignore the rest of the string (comments)
-            int pos = currentLine.IndexOfAny(new char[] { ';', '#' });
+            int pos = currentLine.IndexOfAny([';', '#']);
 
             if (pos >= 0)
             {
@@ -218,11 +217,11 @@ public class IniParser : IIniParser
             {
                 if (currentLine.StartsWith("[") && currentLine.EndsWith("]"))
                 {
-                    currentSection = currentLine[1..^1];
+                    currentSection = currentLine.Substring(1, currentLine.Length - 2);
                 }
                 else
                 {
-                    string[] keyPair = currentLine.Split(new char[] { '=' }, 2);
+                    string[] keyPair = currentLine.Split(['='], 2);
 
                     if (keyPair.Length != 2)
                     {
@@ -250,15 +249,9 @@ public class IniParser : IIniParser
     /// <summary>
     /// SectionKeyPair struct.
     /// </summary>
-    private readonly struct SectionKeyPair
+    private readonly struct SectionKeyPair(string section, string sectionKey)
     {
-        public readonly string Section;
-        public readonly string SectionKey;
-
-        public SectionKeyPair(string section, string sectionKey)
-        {
-            Section = section;
-            SectionKey = sectionKey;
-        }
+        public readonly string Section = section;
+        public readonly string SectionKey = sectionKey;
     }
 }

@@ -1,6 +1,6 @@
-namespace IniFileParser.Exceptions;
-
 using System;
+
+namespace IniParser.Lib.Exceptions;
 
 public class IniEnumerationFailedException : Exception
 {

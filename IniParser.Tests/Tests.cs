@@ -1,10 +1,10 @@
-namespace IniFileParser.Tests;
-
 using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using NUnit.Framework;
+
+namespace IniParser.Tests;
 
 [TestFixture]
 public class Tests
@@ -45,7 +45,7 @@ public class Tests
     private const string TMPDIR = @".\Sample\TMP";
 
     private string tmpIniFilePath = string.Empty;
-    private IIniParser ini = null!;
+    private Lib.IIniParser ini = null!;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -72,7 +72,7 @@ public class Tests
 
             File.Copy(DEFAULTINIFILEPATH, this.tmpIniFilePath);
 
-            ini = new IniParser(this.tmpIniFilePath);
+            ini = new Lib.IniParser(this.tmpIniFilePath);
         }
         catch (Exception ex)
         {
@@ -277,9 +277,7 @@ public class Tests
     /// </summary>
     private static string GenerateSHA512String(byte[] inputBytes)
     {
-        var sha512 = SHA512.Create();
-        byte[] hashBytes = sha512.ComputeHash(inputBytes);
-
+        byte[] hashBytes = SHA512.HashData(inputBytes);
         var sb = new StringBuilder();
 
         foreach (var hashByte in hashBytes)

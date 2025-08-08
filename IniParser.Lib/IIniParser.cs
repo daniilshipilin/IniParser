@@ -1,6 +1,6 @@
-namespace IniFileParser;
-
 using System.Collections.Generic;
+
+namespace IniParser.Lib;
 
 public interface IIniParser
 {

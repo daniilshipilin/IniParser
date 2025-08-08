@@ -3,7 +3,7 @@
 
 ### Description
 
-Simple INI file parser library written in C# (.NET Standart v2.1).
+Simple INI file parser library written in C# (.NET Standart v2.0).
 
 -----
 

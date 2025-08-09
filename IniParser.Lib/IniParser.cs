@@ -8,7 +8,7 @@ namespace IniParser.Lib;
 /// <summary>
 /// IniParser class.
 /// </summary>
-public class IniParser : IIniParser
+public class IniParser : IParser
 {
     /// <summary>
     /// Section key pair/value dictionary.
@@ -26,8 +26,8 @@ public class IniParser : IIniParser
             throw new FileNotFoundException(nameof(iniFilePath));
         }
 
-        IniFilePath = iniFilePath;
-        EnumerateSectionKeyPairs();
+        this.IniFilePath = iniFilePath;
+        this.EnumerateSectionKeyPairs();
     }
 
     /// <summary>
@@ -51,13 +51,7 @@ public class IniParser : IIniParser
     public string? GetValue(string section, string sectionKey)
     {
         var skp = new SectionKeyPair(section, sectionKey);
-
-        if (keyPairs.TryGetValue(skp, out string keyValue))
-        {
-            return keyValue;
-        }
-
-        return null;
+        return this.keyPairs.TryGetValue(skp, out string keyValue) ? keyValue : null;
     }
 
     /// <summary>
@@ -67,18 +61,18 @@ public class IniParser : IIniParser
     {
         var skp = new SectionKeyPair(section, sectionKey);
 
-        if (keyPairs.ContainsKey(skp))
+        if (this.keyPairs.ContainsKey(skp))
         {
             // replace existing key value
-            keyPairs[skp] = keyValue.Trim();
+            this.keyPairs[skp] = keyValue.Trim();
         }
         else
         {
-            keyPairs.Add(skp, keyValue.Trim());
+            this.keyPairs.Add(skp, keyValue.Trim());
         }
 
-        ChangesPending = true;
-        CheckAutoSaveRequired();
+        this.ChangesPending = true;
+        this.CheckAutoSaveRequired();
     }
 
     /// <summary>
@@ -88,11 +82,11 @@ public class IniParser : IIniParser
     {
         var keysAndValues = new Dictionary<string, string?>();
 
-        foreach (var skp in keyPairs.Keys)
+        foreach (var skp in this.keyPairs.Keys)
         {
             if (skp.Section.Equals(section))
             {
-                string? keyValue = GetValue(section, skp.SectionKey);
+                string? keyValue = this.GetValue(section, skp.SectionKey);
                 keysAndValues.Add(skp.SectionKey, keyValue);
             }
         }
@@ -108,14 +102,14 @@ public class IniParser : IIniParser
         bool keyIsDeleted = false;
         var skp = new SectionKeyPair(section, sectionKey);
 
-        if (keyPairs.ContainsKey(skp))
+        if (this.keyPairs.ContainsKey(skp))
         {
-            keyPairs.Remove(skp);
-            ChangesPending = true;
+            this.keyPairs.Remove(skp);
+            this.ChangesPending = true;
             keyIsDeleted = true;
         }
 
-        CheckAutoSaveRequired();
+        this.CheckAutoSaveRequired();
 
         return keyIsDeleted;
     }
@@ -127,7 +121,7 @@ public class IniParser : IIniParser
     {
         var sections = new List<string>();
 
-        foreach (var sectionKeyPair in keyPairs.Keys)
+        foreach (var sectionKeyPair in this.keyPairs.Keys)
         {
             if (!sections.Contains(sectionKeyPair.Section))
             {
@@ -141,17 +135,17 @@ public class IniParser : IIniParser
         {
             sb.AppendLine($"[{section}]");
 
-            foreach (var sectionKeyPair in keyPairs.Keys)
+            foreach (var sectionKeyPair in this.keyPairs.Keys)
             {
                 if (sectionKeyPair.Section.Equals(section))
                 {
-                    sb.AppendLine($"{sectionKeyPair.SectionKey}={keyPairs[sectionKeyPair]}");
+                    sb.AppendLine($"{sectionKeyPair.SectionKey}={this.keyPairs[sectionKeyPair]}");
                 }
             }
         }
 
-        File.WriteAllText(IniFilePath, sb.ToString(), new UTF8Encoding(false));
-        ChangesPending = false;
+        File.WriteAllText(this.IniFilePath, sb.ToString(), new UTF8Encoding(false));
+        this.ChangesPending = false;
     }
 
     /// <summary>
@@ -159,8 +153,8 @@ public class IniParser : IIniParser
     /// </summary>
     public void ReloadIni()
     {
-        ChangesPending = false;
-        EnumerateSectionKeyPairs();
+        this.ChangesPending = false;
+        this.EnumerateSectionKeyPairs();
     }
 
     /// <summary>
@@ -168,8 +162,8 @@ public class IniParser : IIniParser
     /// </summary>
     public void EnableIniAutoSave()
     {
-        IniAutoSaveEnabled = true;
-        CheckAutoSaveRequired();
+        this.IniAutoSaveEnabled = true;
+        this.CheckAutoSaveRequired();
     }
 
     /// <summary>
@@ -177,7 +171,7 @@ public class IniParser : IIniParser
     /// </summary>
     public void DisableIniAutoSave()
     {
-        IniAutoSaveEnabled = false;
+        this.IniAutoSaveEnabled = false;
     }
 
     /// <summary>
@@ -187,18 +181,18 @@ public class IniParser : IIniParser
     /// <exception cref="IniEnumerationFailedException">Thrown when the ini key/value pair enumeration failed.</exception>
     private void EnumerateSectionKeyPairs()
     {
-        keyPairs.Clear();
+        this.keyPairs.Clear();
 
-        string[] iniFile = File.ReadAllLines(IniFilePath, Encoding.UTF8);
+        string[] iniFile = File.ReadAllLines(this.IniFilePath, Encoding.UTF8);
 
         if (iniFile.Length == 0)
         {
-            throw new IniFileEmptyException($"'{IniFilePath}' file is empty");
+            throw new IniFileEmptyException($"'{this.IniFilePath}' file is empty");
         }
 
         string currentSection = string.Empty;
 
-        foreach (var line in iniFile)
+        foreach (string line in iniFile)
         {
             string currentLine = line;
 
@@ -229,7 +223,7 @@ public class IniParser : IIniParser
                     }
 
                     var skp = new SectionKeyPair(currentSection, keyPair[0].Trim());
-                    keyPairs.Add(skp, keyPair[1].Trim());
+                    this.keyPairs.Add(skp, keyPair[1].Trim());
                 }
             }
         }
@@ -240,9 +234,9 @@ public class IniParser : IIniParser
     /// </summary>
     private void CheckAutoSaveRequired()
     {
-        if (IniAutoSaveEnabled && ChangesPending)
+        if (this.IniAutoSaveEnabled && this.ChangesPending)
         {
-            SaveIni();
+            this.SaveIni();
         }
     }
 

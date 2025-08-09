@@ -45,7 +45,7 @@ public class Tests
     private const string TMPDIR = @".\Sample\TMP";
 
     private string tmpIniFilePath = string.Empty;
-    private Lib.IIniParser ini = null!;
+    private Lib.IParser ini = null!;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -69,9 +69,7 @@ public class Tests
         try
         {
             this.tmpIniFilePath = Path.Combine(TMPDIR, $"{Path.GetRandomFileName()}.ini");
-
             File.Copy(DEFAULTINIFILEPATH, this.tmpIniFilePath);
-
             ini = new Lib.IniParser(this.tmpIniFilePath);
         }
         catch (Exception ex)
@@ -186,7 +184,7 @@ public class Tests
         ini.SaveIni();
         ini.ReloadIni();
 
-        CheckIfKeyValuesMatch();
+        this.CheckIfKeyValuesMatch();
 
         Assert.Fail();
     }
@@ -280,7 +278,7 @@ public class Tests
         byte[] hashBytes = SHA512.HashData(inputBytes);
         var sb = new StringBuilder();
 
-        foreach (var hashByte in hashBytes)
+        foreach (byte hashByte in hashBytes)
         {
             sb.Append(hashByte.ToString("x2"));
         }

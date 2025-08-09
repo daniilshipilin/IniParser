@@ -2,10 +2,6 @@ using System;
 
 namespace IniParser.Lib.Exceptions;
 
-public class IniFileEmptyException : Exception
+public class IniFileEmptyException(string message) : Exception(message)
 {
-    public IniFileEmptyException(string message)
-        : base(message)
-    {
-    }
 }

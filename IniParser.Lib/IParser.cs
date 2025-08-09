@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace IniParser.Lib;
 
-public interface IIniParser
+public interface IParser
 {
     bool ChangesPending { get; }
 

@@ -2,10 +2,6 @@ using System;
 
 namespace IniParser.Lib.Exceptions;
 
-public class IniEnumerationFailedException : Exception
+public class IniEnumerationFailedException(string message) : Exception(message)
 {
-    public IniEnumerationFailedException(string message)
-        : base(message)
-    {
-    }
 }
